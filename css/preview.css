@@ -1,0 +1,274 @@
+/* ================================================================
+   DX TOOLS DESIGN SYSTEM — PREVIEW LAYER
+
+   Scoped to .dx-preview. Always brand-faithful UC San Diego light mode,
+   regardless of the surrounding frame's color mode. Tokens are
+   overridden at the .dx-preview boundary in tokens.css.
+   ================================================================ */
+
+/* ================================================================
+   PREVIEW CONTAINER
+   The outer frame that holds a preview area. Frame-side styling —
+   the visible border and label are frame elements, not preview.
+   ================================================================ */
+.preview-container {
+  position: relative;
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background-color: var(--color-surface);
+}
+
+/* Toolbar strip above preview — lives in frame, not preview content */
+.preview-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-4);
+  height: 40px;
+  background-color: var(--color-surface-raised);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.preview-toolbar__label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+/* Viewport dots — like browser traffic lights, non-functional decoration */
+.preview-toolbar__dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-right: var(--space-2);
+}
+
+.preview-toolbar__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-border-strong);
+}
+
+.preview-toolbar__spacer {
+  flex: 1;
+}
+
+.preview-toolbar__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* Size selector buttons in toolbar */
+.preview-size-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--target-sm);
+  width: var(--target-sm);
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: color var(--t-fast), border-color var(--t-fast), background-color var(--t-fast);
+  font-size: var(--text-xs);
+}
+
+.preview-size-btn:hover,
+.preview-size-btn[aria-pressed="true"] {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  background-color: var(--color-accent-muted);
+}
+
+/* ================================================================
+   PREVIEW BODY  (.dx-preview)
+   Brand-faithful content area. Tokens scoped here via tokens.css.
+   ================================================================ */
+.dx-preview {
+  /* Tokens are set in tokens.css */
+  display: block;
+  min-height: 120px;
+}
+
+/* Strip any frame-mode overrides within preview — the .dx-preview
+   scope in tokens.css handles color, but we also need to reset the
+   font to preview font explicitly here for inheritance */
+.dx-preview,
+.dx-preview * {
+  font-family: var(--font-preview);
+}
+
+/* Code within previews can still use monospace */
+.dx-preview code,
+.dx-preview pre,
+.dx-preview kbd,
+.dx-preview samp {
+  font-family: var(--font-code);
+}
+
+/* Padding variant for the preview body */
+.dx-preview--padded {
+  padding: var(--space-8);
+}
+
+.dx-preview--sm {
+  padding: var(--space-4);
+}
+
+/* Dark preview stage — content shown on dark bg (e.g. header mockups) */
+.preview-container--stage .dx-preview {
+  background-color: var(--brand-navy);
+  color: #FFFFFF;
+}
+
+/* ================================================================
+   BRAND-FAITHFUL COMPONENT OVERRIDES WITHIN .dx-preview
+   These mirror UC San Diego website patterns — suitable for showing nav
+   mockups, page templates, etc.
+   ================================================================ */
+
+/* ── Cascade boundary ──────────────────────────────────────────────────────
+   frame.css uses :where(.dx-main) on its link rule, reducing its specificity
+   to 0,1,1. All .dx-preview rules at 0,2,0+ safely override it.
+   Never add bare `.dx-preview a` selectors that re-introduce 0,1,1 conflicts —
+   always scope nav/structural links with an extra class for 0,2,0.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* Content links — body text, paragraphs, lists */
+.dx-preview a {
+  color: var(--brand-blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.dx-preview a:hover {
+  color: #004e7a;
+}
+
+/* Headings in preview use Roboto with brand navy */
+.dx-preview h1,
+.dx-preview h2,
+.dx-preview h3,
+.dx-preview h4,
+.dx-preview h5,
+.dx-preview h6 {
+  color: var(--brand-navy);
+  font-family: var(--font-preview);
+  line-height: 1.3;
+  margin-bottom: 0.5em;
+}
+
+.dx-preview p {
+  color: #2d4464;
+  line-height: 1.6;
+  margin-bottom: 1em;
+}
+
+/* Brand button inside preview */
+.dx-preview .btn--primary {
+  background-color: var(--brand-blue);
+  border-color: var(--brand-blue);
+  color: #FFFFFF;
+}
+
+.dx-preview .btn--primary:hover {
+  background-color: #004e7a;
+  border-color: #004e7a;
+}
+
+/* Brand nav inside preview */
+.preview-nav {
+  display: flex;
+  align-items: center;
+  background-color: var(--brand-navy);
+  color: #FFFFFF;
+  padding: 0 var(--space-6);
+  height: 60px;
+  gap: var(--space-2);
+}
+
+/* Brand link — .dx-preview .preview-nav__brand (0,2,0) beats frame 0,1,1 */
+.dx-preview .preview-nav__brand,
+.preview-nav__brand {
+  font-weight: var(--weight-bold);
+  font-size: var(--text-md);
+  color: #FFFFFF;                /* ~16:1 on Navy ✅ AAA */
+  text-decoration: none;
+  margin-right: var(--space-6);
+  flex-shrink: 0;
+}
+
+.dx-preview .preview-nav__brand:hover,
+.preview-nav__brand:hover {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+/* Nav links — (0,2,0) beats frame 0,1,1 */
+.dx-preview .preview-nav__link,
+.preview-nav__link {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 var(--space-3);
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.9);   /* #FFFFFF 90% → ~15:1 on Navy ✅ AAA */
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: color var(--t-fast), border-color var(--t-fast);
+}
+
+.dx-preview .preview-nav__link:hover,
+.preview-nav__link:hover {
+  color: #FFFFFF;
+  border-bottom-color: var(--brand-yellow);
+}
+
+.dx-preview .preview-nav__link.active,
+.preview-nav__link.active {
+  color: #FFFFFF;
+  border-bottom-color: var(--brand-yellow);
+}
+
+/* Gold accent bar — a key UC San Diego brand motif */
+.preview-gold-bar {
+  height: 4px;
+  background-color: var(--brand-gold);
+  width: 100%;
+}
+
+/* Brand hero section inside preview */
+.preview-hero {
+  background-color: var(--brand-navy);
+  color: #FFFFFF;
+  padding: var(--space-12) var(--space-8);
+}
+
+.preview-hero h1 {
+  color: #FFFFFF;
+  font-size: 2rem;
+}
+
+.preview-hero p {
+  color: rgba(255,255,255,0.8);
+}
+
+/* ================================================================
+   RESPONSIVE PREVIEW (viewport simulation)
+   ================================================================ */
+.preview-container[data-viewport="mobile"] .dx-preview {
+  max-width: 390px;
+  margin: 0 auto;
+}
+
+.preview-container[data-viewport="tablet"] .dx-preview {
+  max-width: 768px;
+  margin: 0 auto;
+}

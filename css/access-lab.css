@@ -1,0 +1,827 @@
+/* ================================================================
+   ACCESS LAB — Tool-specific styles
+   Extends the DX Tools design system. Only patterns not covered
+   by the shared system are defined here.
+   ================================================================ */
+
+
+
+/* ── Layout — full-width, no sidebar ────────────────────────────
+   Using dx-doc-body--no-sidebar-wide (built into frame.css).
+   Constrain only the intro text block for readable line length.
+   ──────────────────────────────────────────────────────────────── */
+.dx-main > .dx-content {
+  max-width: var(--content-max);  /* 900px */
+}
+
+/* ── <p> max-width reset ─────────────────────────────────────────
+   frame.css puts a 72ch cap on <p> inside .dx-main.
+   Undo it for containers that need full-width paragraph flow.
+   ──────────────────────────────────────────────────────────────── */
+.al-reveal-box p,
+.al-image-box p,
+.al-hours-card p,
+.al-sr-panel p,
+.al-insight-panel p,
+.al-reframe-panel p,
+.al-explanation p,
+.al-preview-display p,
+.al-preview-controls p {
+  max-width: none;
+  margin-bottom: 0;
+}
+
+/* ── Disclaimer note ─────────────────────────────────────────────── */
+.al-disclaimer {
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+  margin-top: calc(-1 * var(--space-3));
+  margin-bottom: var(--space-8);
+  line-height: 1.7;
+  max-width: none;
+}
+
+/* ── Badge row ───────────────────────────────────────────────────── */
+.al-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+/* ── Button row ──────────────────────────────────────────────────── */
+.al-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* ── Guided steps ────────────────────────────────────────────────────
+   Sequential exploration prompts inside .al-preview-controls.
+   Each step has a numbered badge, an instructional prompt, optional
+   action buttons (.al-step__actions), and an optional outcome area.
+   ──────────────────────────────────────────────────────────────── */
+.al-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.al-step {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.al-step__num {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent-muted);
+  color: var(--color-accent);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;  /* optical alignment with first line of prompt */
+  flex-shrink: 0;
+}
+
+.al-step__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.al-step__prompt {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: 1.5;
+  font-weight: var(--weight-medium);
+  margin: 0;
+}
+
+.al-step__hint {
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+  font-style: italic;
+  margin: 0;
+}
+
+.al-step__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+/* ── Helper hint text ────────────────────────────────────────────── */
+.al-hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+  font-style: italic;
+  margin: var(--space-4) 0 0;
+  max-width: none;
+}
+
+/* ================================================================
+   CHALLENGE PREVIEW CONTAINERS
+   Each challenge station uses preview-container from the design
+   system as the outer frame, with a toolbar (label + controls at
+   top), a display area, and a controls footer below.
+
+   .preview-container   — system: border, border-radius, overflow
+   .preview-toolbar     — system: dots + label bar, 40px
+   .al-challenge-frame  — tool: margin + sizing
+   .al-preview-display  — tool: padded content zone
+   .al-preview-controls — tool: controls footer below the display
+   ================================================================ */
+
+/* Outer chrome */
+.al-challenge-frame {
+  margin-bottom: var(--space-6);
+}
+
+/* Badge row inline in the toolbar */
+.preview-toolbar .al-badge-row {
+  margin: 0;
+  flex-wrap: nowrap;
+}
+
+/* Challenge display — the interactive/simulation content area */
+.al-preview-display {
+  padding: var(--space-6) var(--space-8);
+  background-color: var(--color-bg);
+}
+
+/* Controls footer — buttons, badges, result messages */
+.al-preview-controls {
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-surface-raised);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ── Mode toggle buttons in toolbar (Station 2) ──────────────────
+   Sized to fit the 40px toolbar. State classes (.is-active-image,
+   .is-active-text) are shared with the full-size .al-mode-btn.
+   ──────────────────────────────────────────────────────────────── */
+.al-mode-toggle-toolbar {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.al-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--target-sm);        /* 36px — fits 40px toolbar */
+  padding: 0 var(--space-3);
+  font-family: var(--font-frame);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-subtle);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+
+.al-mode-btn.is-active-image {
+  background: var(--color-danger-muted);
+  border-color: var(--color-danger);
+  color: var(--color-danger-text);
+}
+
+.al-mode-btn.is-active-text {
+  background: var(--color-success-muted);
+  border-color: var(--color-success);
+  color: var(--color-success-text);
+}
+
+.al-mode-btn:hover:not(.is-active-image):not(.is-active-text) {
+  background: var(--color-accent-muted);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.al-mode-btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* ── White-on-white reveal box (Station 1) ───────────────────────────
+   INTENTIONALLY INACCESSIBLE: .al-hidden-text starts white on white.
+   This is the lesson — do not change the initial color value.
+   Always white background (hardcoded) to simulate a real web page.
+   ──────────────────────────────────────────────────────────────── */
+.al-reveal-box {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  border: 1px solid var(--color-border-strong);
+  min-height: 130px;
+}
+
+/* White text on white background — intentionally inaccessible for the demo.
+   Scoped under .al-reveal-box to beat frame.css's :where(.dx-main) p rule (0,1,1). */
+.al-reveal-box .al-hidden-text { transition: color 0.5s ease; color: white; }
+.al-reveal-box .al-hidden-text.is-revealed { color: var(--color-text-muted); }
+
+.al-reveal-box h3.al-hidden-text {
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  margin: 0 0 var(--space-3);
+  color: white;
+}
+.al-reveal-box h3.al-hidden-text.is-revealed { color: var(--color-text); }
+
+.al-reveal-box p.al-hidden-text {
+  font-size: var(--text-sm);
+  line-height: 2;
+  white-space: pre-line;
+  margin: 0;
+  color: white;
+}
+
+/* ── Screen reader simulation panel ─────────────────────────────────
+   Always dark — simulates a terminal/screen reader output window.
+   Uses DX dark mode token values, hardcoded since this element is
+   intentionally theme-independent (terminal windows are always dark).
+   DX dark token values: --color-bg #0d1b2e, --color-border-strong rgba(255,255,255,0.20)
+   ──────────────────────────────────────────────────────────────── */
+.al-sr-panel {
+  background: #0d1b2e;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  margin-top: var(--space-4);
+  font-family: var(--font-code);
+  font-size: var(--text-code);
+}
+
+.al-sr-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+
+.al-sr-panel__label {
+  color: #9DB8D4;   /* DX dark --color-text-muted */
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* "Hear it" button — standalone styled for the always-dark SR panel surface.
+   Not derived from .btn since that adds tactile shadows unsuitable here. */
+.al-sr-panel__hear {
+  min-height: var(--target-sm);
+  padding: 0 var(--space-4);
+  font-family: var(--font-frame);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.03em;
+  border-radius: var(--radius-full);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.80);
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+.al-sr-panel__hear:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.40);
+}
+.al-sr-panel__hear.is-speaking {
+  background: var(--color-danger-muted);
+  border-color: var(--color-danger);
+  color: var(--color-danger-text);
+}
+.al-sr-panel__hear:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.al-sr-line { color: #FFFFFF; line-height: 2; }
+.al-sr-line--indent { padding-left: var(--space-5); }
+
+.al-sr-btn-icon {
+  vertical-align: middle;
+  margin-right: var(--space-1);
+  flex-shrink: 0;
+}
+
+.al-sr-panel__note {
+  font-family: var(--font-frame);
+  font-size: var(--text-xs);
+  color: #7A9AB8;
+  font-style: italic;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  line-height: 1.6;
+}
+
+/* ── Insight callout panel ───────────────────────────────────────────
+   Uses --color-secondary-muted (Brand Gold / Citron) for the warm
+   "learning moment" tint. Secondary is the right semantic slot for
+   callout/note elements — primary accent is reserved for interactive
+   controls (buttons, focus rings, selection states).
+   ──────────────────────────────────────────────────────────────── */
+.al-insight-panel {
+  background: var(--color-secondary-muted);
+  margin-top: var(--space-10);
+}
+
+.al-insight-panel .panel__body {
+  font-size: var(--text-sm);
+  line-height: 1.85;
+  color: var(--color-text-muted);
+}
+
+.al-key-ideas-panel {
+  margin-top: var(--space-4);
+}
+
+.al-key-ideas-panel .panel__body {
+  font-size: var(--text-sm);
+  line-height: 1.85;
+  color: var(--color-text-muted);
+}
+
+.al-key-ideas-panel .panel__body ul {
+  margin: 0;
+  padding-left: var(--space-5);
+}
+
+.al-key-ideas-panel .panel__body li {
+  margin-bottom: var(--space-2);
+}
+.al-key-ideas-panel .panel__body li:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Image box (Station 2) ───────────────────────────────────────────
+   INTENTIONALLY INACCESSIBLE in image mode.
+   Always light — hardcoded because this represents a physical document,
+   not a UI panel. The light appearance is theme-independent by design.
+   ──────────────────────────────────────────────────────────────── */
+.al-image-box {
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  border: 1px solid #DDE3EC;   /* system light-mode --color-border */
+  position: relative;
+  min-height: 90px;
+  background: white;
+}
+.al-image-box.is-image-mode { background: white; }
+
+.al-image-box__content {
+  transition: filter var(--t-base);
+}
+.al-image-box.is-image-mode .al-image-box__content {
+  filter: contrast(0.9) sepia(0.1);
+  user-select: none;
+  cursor: default;
+}
+
+/* Image box status pill — positioned in upper-right of the always-light image box. */
+.al-image-box__status {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid;
+  line-height: 1;
+  white-space: nowrap;
+}
+.al-image-box.is-image-mode .al-image-box__status {
+  color: #6B7280;
+  background: #F3F4F6;
+  border-color: #D1D5DB;
+}
+.al-image-box.is-text-mode .al-image-box__status {
+  color: #3a6e18;
+  background: rgba(58, 110, 24, 0.08);
+  border-color: #3a6e18;
+}
+
+/* ── Service items (Station 3) ───────────────────────────────────────
+   Simulates a library website UI. Background uses system surface tokens
+   so it adapts naturally to light/dark theme.
+   ──────────────────────────────────────────────────────────────── */
+.al-services-box {
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.al-services-label {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-4);
+}
+
+.al-services-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.al-service-item {
+  display: block;
+  width: 100%;
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  text-align: left;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  font-weight: var(--weight-medium);
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+  font-family: var(--font-frame);
+  min-height: var(--target-md);
+}
+
+/* Only keyboard-accessible buttons get hover feedback */
+button.al-service-item:hover {
+  background: var(--color-surface-raised);
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+/* Selected: keyboard-accessible button uses amber accent */
+button.al-service-item.is-selected {
+  background: var(--color-accent-muted);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* INTENTIONALLY a <div>, not a <button> — keyboard inaccessibility demo.
+   Do not add tabindex. This is unreachable by Tab key by design. */
+div.al-service-item {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+/* Selected: inaccessible div uses danger tokens (communicates the problem) */
+div.al-service-item.is-selected {
+  background: var(--color-danger-muted);
+  border-color: var(--color-danger);
+  color: var(--color-danger-text);
+}
+
+.al-mouse-only-label {
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--text-xs);
+  color: var(--color-danger-text);
+  font-weight: var(--weight-bold);
+}
+
+/* ── Explanation box (Station 3) ─────────────────────────────────────
+   Code-centric callout box. Uses --color-bg (darkest layer) to
+   visually recede below the challenge frame above it.
+   ──────────────────────────────────────────────────────────────── */
+.al-explanation {
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.85;
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-2);
+}
+
+/* Inline code tag — styled on the DX surface stack */
+.al-code-tag {
+  background: var(--color-surface-raised);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-code);
+  font-size: var(--text-xs);
+}
+.al-code-tag--green  { color: var(--color-success-text); }
+.al-code-tag--orange { color: var(--color-warning-text); }
+
+/* ── Contrast spectrum demo (Station 1 insight panel) ───────────────
+   Always white background — simulates a real screen surface so the
+   contrast ratios read correctly regardless of the UI theme.
+   Inline color values in the HTML are intentional content (they ARE
+   the contrast ratios being demonstrated), not styling shortcuts.
+   ──────────────────────────────────────────────────────────────── */
+.al-contrast-demo {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: var(--space-4) 0;
+  font-family: Georgia, serif;
+}
+
+.al-contrast-demo__head,
+.al-contrast-row {
+  display: grid;
+  grid-template-columns: 52px 1fr 1fr;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+}
+
+.al-contrast-demo__head {
+  background: #f7f7f7;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.al-contrast-row {
+  border-bottom: 1px solid #f0f0f0;
+}
+.al-contrast-row:last-child {
+  border-bottom: none;
+}
+
+.al-contrast-demo__col {
+  font-family: var(--font-frame);
+  font-size: 11px;
+  font-weight: var(--weight-bold);
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.al-contrast-ratio {
+  font-family: var(--font-code);
+  font-size: 11px;
+  color: #666;
+  white-space: nowrap;
+}
+
+/* Small and large text samples — Georgia matches the citation demo;
+   sizes chosen to bracket the WCAG normal/large text boundary. */
+.al-contrast-sm { font-size: 14px; line-height: 1.6; }
+.al-contrast-lg { font-size: 22px; line-height: 1.3; }
+
+/* ── Color-vision demo (Station 1 insight panel) ────────────────────
+   Always white background context. Grayscale column uses filter to
+   simulate luminance-only perception (approximates color blindness).
+   ──────────────────────────────────────────────────────────────── */
+.al-color-demo {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: 0 0 var(--space-2);
+  font-family: Georgia, serif;
+}
+
+.al-color-demo__head,
+.al-color-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 1fr;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+}
+
+.al-color-demo__head {
+  background: #f7f7f7;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.al-color-row {
+  border-bottom: 1px solid #f0f0f0;
+}
+.al-color-row:last-child {
+  border-bottom: none;
+}
+
+.al-color-label {
+  font-family: var(--font-frame);
+  font-size: 11px;
+  color: #666;
+  white-space: nowrap;
+}
+
+.al-color-sample {
+  display: inline-block;
+  padding: 3px var(--space-2);
+  border-radius: 2px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.al-color-sample--gray {
+  filter: grayscale(1);
+}
+
+/* ── Reframe panel (Station 4) ───────────────────────────────────────
+   Built on .panel from the design system.
+   ──────────────────────────────────────────────────────────────── */
+.al-reframe-panel {
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-5);
+}
+
+.al-reframe__eyebrow {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-secondary);
+  margin-bottom: var(--space-4);
+}
+
+.al-reframe__quote {
+  font-size: var(--text-base);
+  line-height: var(--leading-loose);
+  color: var(--color-text);
+  font-style: italic;
+  margin: 0 0 var(--space-4);
+  border: none;
+  padding: 0;
+}
+
+.al-reframe__body {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-loose);
+  margin: 0;
+}
+
+/* ── Table helpers (Station 4) ───────────────────────────────────── */
+.table td.al-cell-center,
+.table th.al-cell-center { text-align: center; vertical-align: middle; white-space: nowrap; }
+.table td.al-cell-label strong { display: block; color: var(--color-text); margin-bottom: 2px; }
+.table td.al-cell-label .al-row-desc {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+}
+
+/* ── Hours display (shared across activities) ─────────────────────────
+   .al-hours-card    — theme-aware card container (Activities 3 and 4)
+   .al-hours-heading — <h3> heading with proper semantics (Activities 2, 4)
+   .al-hours-text    — plain hours paragraph (Activities 3 and 4)
+   .al-hours-actions — flex row of action buttons
+   .al-hours-btn     — shared action button (Library events / Holiday closures)
+   ──────────────────────────────────────────────────────────────── */
+.al-hours-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  border: 1px solid var(--color-border-strong);
+}
+
+.al-hours-heading {
+  font-family: Georgia, serif;
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  margin: 0 0 var(--space-3);
+}
+
+.al-hours-text {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 2;
+  margin: 0;
+}
+
+.al-fake-heading {
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  margin: 0 0 var(--space-3);
+  /* Deliberately matches .al-hours-heading visually but is a <p>, not <h3> */
+}
+
+.al-hours-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.al-hours-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-4);
+  min-height: var(--target-sm);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-family: var(--font-frame);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+
+button.al-hours-btn:hover {
+  background: var(--color-accent-muted);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+button.al-hours-btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* INTENTIONALLY a <div>, not a <button> — keyboard inaccessibility demo (Activity 3).
+   Do not add tabindex. The lesson is that onclick alone does not make an element
+   keyboard-accessible. (WCAG 2.1 SC 2.1.1 Keyboard, Level A) */
+div.al-hours-btn {
+  position: relative;
+  user-select: none;
+}
+
+div.al-hours-btn.is-selected {
+  background: var(--color-danger-muted);
+  border-color: var(--color-danger);
+  color: var(--color-danger-text);
+}
+
+/* Inside the always-light image box (Activity 2): hardcoded light-mode values
+   since .al-image-box is theme-independent. */
+.al-image-box .al-hours-btn {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+/* Inside the reveal box (Activity 1): hidden state = white on white.
+   Transitions background and border alongside the color transition on .al-hidden-text.
+   Always-light values hardcoded to match .al-reveal-box's fixed white background. */
+.al-reveal-box .al-hours-btn {
+  background: white;
+  border-color: white;
+  transition: background var(--t-slow), border-color var(--t-slow), color 0.5s ease;
+}
+.al-reveal-box .al-hours-btn.is-revealed {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+.al-reveal-box button.al-hours-btn.is-revealed:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .al-preview-display {
+    padding: var(--space-4);
+  }
+  .al-preview-controls {
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
+@media (max-width: 600px) {
+  .al-mode-toggle-toolbar {
+    flex-wrap: wrap;
+  }
+  .al-mode-btn {
+    flex: 1 0 auto;
+  }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .al-hidden-text,
+  .al-image-box__content,
+  .al-service-item,
+  .al-mode-btn,
+  .al-hours-btn {
+    transition-duration: 0.01ms;
+  }
+}

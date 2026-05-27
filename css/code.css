@@ -1,0 +1,353 @@
+/* ================================================================
+   DX TOOLS DESIGN SYSTEM — CODE
+   Code blocks, inline code, terminal output, diff display.
+   Import after components.css.
+   ================================================================ */
+
+/* ================================================================
+   INLINE CODE
+   Used within paragraphs and prose.
+   ================================================================ */
+:is(code, kbd, samp):not(pre code) {
+  font-family: var(--font-code);
+  font-size: 0.9em;    /* slightly smaller than surrounding text */
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  padding: 0.15em 0.4em;
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+kbd {
+  background-color: var(--color-surface-overlay);
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+  box-shadow: var(--shadow-xs);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+}
+
+/* ================================================================
+   CODE BLOCKS  (.code-block)
+   Full-width blocks with optional line numbers and copy button.
+   ================================================================ */
+.code-block {
+  position: relative;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: var(--space-4) 0;
+  font-size: 0;   /* prevents whitespace gap between toolbar and pre */
+}
+
+.code-block__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  height: 36px;
+  background-color: var(--color-surface-raised);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0;   /* reset */
+}
+
+.code-block__lang {
+  font-family: var(--font-code);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.code-block__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 28px;
+  padding: 0 var(--space-3);
+  font-family: var(--font-frame);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: color var(--t-fast), border-color var(--t-fast), background-color var(--t-fast);
+}
+
+.code-block__copy:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  background-color: var(--color-accent-muted);
+}
+
+.code-block__copy--copied {
+  color: var(--color-success-text);
+  border-color: var(--color-success);
+}
+
+/* The <pre> element */
+.code-block pre,
+pre.code-block {
+  margin: 0;
+  overflow-x: auto;
+  padding: var(--space-5) var(--space-6);
+  font-family: var(--font-code);
+  font-size: var(--text-code);
+  line-height: 1.7;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  tab-size: 2;
+  -moz-tab-size: 2;
+}
+
+.code-block pre code,
+pre.code-block code {
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  border-radius: 0;
+  white-space: pre;
+}
+
+/* ================================================================
+   SYNTAX — MINIMAL THEME
+   Readable without a full syntax highlighter. Works with
+   Highlight.js or Prism via class overrides.
+   ================================================================ */
+
+/* Comments */
+.hljs-comment,
+.hljs-quote,
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--color-text-subtle);
+  font-style: italic;
+}
+
+/* Keywords / control flow */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.token.keyword,
+.token.control,
+.token.directive {
+  color: var(--color-accent);
+  font-weight: var(--weight-medium);
+}
+
+/* Strings */
+.hljs-string,
+.hljs-doctag,
+.token.string,
+.token.attr-value {
+  color: var(--color-success-text);
+}
+
+/* Numbers */
+.hljs-number,
+.hljs-literal,
+.token.number,
+.token.boolean,
+.token.constant {
+  color: var(--color-secondary);
+}
+
+/* Functions / identifiers */
+.hljs-function,
+.hljs-title,
+.token.function,
+.token.class-name {
+  color: #e88f2a;  /* brand-adjacent orange, readable dark+light */
+}
+
+/* Attributes / properties */
+.hljs-attr,
+.token.property,
+.token.attr-name {
+  color: #D462AD;  /* brand magenta */
+}
+
+/* Types / classes */
+.hljs-type,
+.hljs-class,
+.token.class,
+.token.type-definition {
+  color: var(--brand-turquoise);
+}
+
+/* ================================================================
+   LINE NUMBERS (opt-in via .code-block--lined)
+   ================================================================ */
+.code-block--lined pre {
+  padding-left: 0;
+  display: grid;
+  grid-template-columns: 3.5em 1fr;
+  counter-reset: line;
+}
+
+.code-block--lined .line {
+  display: contents;
+}
+
+.code-block--lined .line-num {
+  display: block;
+  padding: 0 var(--space-3);
+  color: var(--color-text-subtle);
+  text-align: right;
+  user-select: none;
+  border-right: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.code-block--lined .line-code {
+  padding-left: var(--space-4);
+}
+
+/* Highlight a specific line */
+.code-block--lined .line--highlight .line-num,
+.code-block--lined .line--highlight .line-code {
+  background-color: var(--color-accent-muted);
+}
+
+/* ================================================================
+   DIFF DISPLAY
+   Added lines green, removed lines red, context neutral.
+   Always uses + / - glyphs alongside color — never color alone.
+   ================================================================ */
+.diff-block {
+  font-family: var(--font-code);
+  font-size: var(--text-code);
+  line-height: 1.7;
+  overflow-x: auto;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.diff-block .diff-line {
+  display: block;
+  padding: 0 var(--space-4);
+  white-space: pre;
+}
+
+.diff-block .diff-line--added {
+  background-color: var(--color-success-muted);
+  color: var(--color-success-text);
+}
+
+.diff-block .diff-line--removed {
+  background-color: var(--color-danger-muted);
+  color: var(--color-danger-text);
+}
+
+.diff-block .diff-line--meta {
+  color: var(--color-text-subtle);
+  background-color: var(--color-surface);
+  font-style: italic;
+}
+
+/* Gutter with +/- symbols */
+.diff-block .diff-line::before {
+  display: inline-block;
+  width: 1.5em;
+  user-select: none;
+}
+
+.diff-block .diff-line--added::before   { content: "+"; }
+.diff-block .diff-line--removed::before { content: "−"; }
+.diff-block .diff-line--context::before { content: " "; }
+.diff-block .diff-line--meta::before    { content: "@"; }
+
+/* ================================================================
+   TERMINAL OUTPUT  (.terminal)
+   Dark always — mimics a real terminal regardless of color mode.
+   ================================================================ */
+.terminal {
+  background-color: #0d1117;
+  color: #c9d1d9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  font-family: var(--font-code);
+  font-size: var(--text-code);
+  line-height: 1.7;
+}
+
+.terminal__bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 var(--space-4);
+  height: 36px;
+  background-color: #161b22;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.terminal__bar-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+}
+
+.terminal__bar-dot:nth-child(1) { background-color: #f78166; }
+.terminal__bar-dot:nth-child(2) { background-color: #d29922; }
+.terminal__bar-dot:nth-child(3) { background-color: #3fb950; }
+
+.terminal__bar-title {
+  font-size: var(--text-xs);
+  color: rgba(255,255,255,0.4);
+  margin: 0 auto;
+  font-family: var(--font-code);
+}
+
+.terminal__body {
+  padding: var(--space-4) var(--space-5);
+  overflow-x: auto;
+}
+
+.terminal__prompt::before {
+  content: "$ ";
+  color: #3fb950;
+  user-select: none;
+}
+
+.terminal__output {
+  color: #c9d1d9;
+}
+
+.terminal__error {
+  color: #f85149;
+}
+
+.terminal__success {
+  color: #3fb950;
+}
+
+/* ================================================================
+   FORCED COLORS — code blocks
+   ================================================================ */
+@media (forced-colors: active) {
+  .code-block,
+  .terminal,
+  .diff-block {
+    border: 2px solid ButtonText;
+  }
+
+  :is(code, kbd):not(pre code) {
+    border: 1px solid ButtonText;
+    background-color: Canvas;
+    color: ButtonText;
+    forced-color-adjust: none;
+  }
+}

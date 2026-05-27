@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[Tool Name] — UC San Diego DX</title>
+
+  <!--
+    DX Tools Design System — minimal tool template
+    ================================================
+    PATH NOTE: These paths assume this file lives at the root of the
+    dx-tools repo (or alongside css/, js/, fonts/).
+
+    If your tool is in a SIBLING repo:
+      href="../dx-tools/css/fonts.css"
+
+    If you COPIED the design system into a design-system/ folder:
+      href="design-system/css/fonts.css"
+
+    Adjust the path prefix on every line below to match your setup.
+  -->
+
+  <!-- FOUC prevention — must be first, before any stylesheet -->
+  <script>const t=localStorage.getItem('dx-theme');document.documentElement.setAttribute('data-theme',t||'light');</script>
+
+  <!-- Design system -->
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/frame.css">
+  <link rel="stylesheet" href="css/components.css">
+  <!-- Add preview.css only if you're showing UC San Diego content mockups -->
+  <!-- <link rel="stylesheet" href="css/preview.css"> -->
+  <!-- Add code.css only if you're displaying code blocks -->
+  <!-- <link rel="stylesheet" href="css/code.css"> -->
+</head>
+<body>
+  <!-- Skip link — required for keyboard/screen reader access -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <div class="dx-doc-layout">
+
+    <!-- ── Header ──────────────────────────────────────────────── -->
+    <header class="dx-header" role="banner">
+      <a href="index.html" class="dx-header__brand" aria-label="[Tool Name] home">
+        <span class="dx-header__mark" aria-hidden="true">DX</span>
+        <span class="dx-header__wordmark">[Tool Name]</span>
+        <!-- Optional divider + subtitle -->
+        <!-- <span class="dx-header__divider" aria-hidden="true"></span> -->
+        <!-- <span class="dx-header__subtitle">UC San Diego</span> -->
+      </a>
+
+      <!-- Top nav links (optional — remove if not needed) -->
+      <nav class="dx-header__nav" aria-label="Tool navigation">
+        <a href="index.html" class="dx-header__nav-link" aria-current="page">Home</a>
+        <!-- <a href="about.html" class="dx-header__nav-link">About</a> -->
+      </nav>
+
+      <!-- Dark/light toggle -->
+      <div class="dx-header__actions">
+        <button class="btn btn--ghost btn--icon" data-theme-toggle aria-label="Switch to light mode" aria-pressed="false">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun"  width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ── Body ────────────────────────────────────────────────── -->
+    <div class="dx-doc-body">
+
+      <!-- Sidebar (optional — remove the <nav> element if not needed) -->
+      <nav class="dx-sidebar" aria-label="Page sections">
+        <div class="dx-sidebar-section">
+          <span class="dx-sidebar-label">On this page</span>
+          <ul class="dx-sidebar-nav">
+            <li><a href="#section-one">Section one</a></li>
+            <li><a href="#section-two">Section two</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Main content -->
+      <main id="main" class="dx-main">
+
+        <!-- Page intro -->
+        <span class="eyebrow">UC San Diego · DX Team</span>
+        <h1 class="page-title">[Tool Name]</h1>
+        <p class="lead">[One sentence describing what this tool does and who it's for.]</p>
+
+        <!-- ── Example section ──────────────────────────────────── -->
+        <section class="dx-section" id="section-one" aria-labelledby="s1-title">
+          <h2 id="s1-title">Section heading</h2>
+          <p>Body copy goes here. Use <code>&lt;section&gt;</code> with <code>aria-labelledby</code> pointing to the heading for screen reader landmark navigation.</p>
+
+          <!-- Buttons -->
+          <div class="dx-demo">
+            <button class="btn btn--primary">Primary action</button>
+            <button class="btn btn--secondary">Secondary</button>
+            <button class="btn btn--ghost">Ghost</button>
+          </div>
+
+          <!-- Alerts -->
+          <div class="alert alert--info" role="status" style="margin-top: var(--space-4);">
+            <svg class="alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div class="alert__body">
+              <strong class="alert__title">Replace this alert</strong>
+              <div class="alert__desc">This is a placeholder. Variants: <code>alert--info</code>, <code>alert--success</code>, <code>alert--warning</code>, <code>alert--danger</code>.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── Panel example ────────────────────────────────────── -->
+        <section class="dx-section" id="section-two" aria-labelledby="s2-title">
+          <h2 id="s2-title">Panel section</h2>
+          <div class="panel">
+            <div class="panel__header">
+              <h3 class="panel__title">Panel title</h3>
+              <span class="badge badge--neutral">Status</span>
+            </div>
+            <div class="panel__body">
+              Panel body content. Use panels to group related controls or information.
+            </div>
+            <div class="panel__footer">
+              <button class="btn btn--primary btn--sm">Confirm</button>
+              <button class="btn btn--ghost btn--sm">Cancel</button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Icons + theme toggle + code copy -->
+  <script src="js/lucide.min.js"></script>
+  <script src="js/theme.js" defer></script>
+  <!-- <script src="js/code-copy.js" defer></script> -->
+  <!-- Add your tool's own JS here -->
+</body>
+</html>

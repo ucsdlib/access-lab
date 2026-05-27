@@ -1,0 +1,752 @@
+/* ================================================================
+   DX TOOLS DESIGN SYSTEM — FRAME
+   Tool chrome: layouts, header, sidebar, status bar, base typography.
+   Import after tokens.css.
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   RESET & BASE
+   ---------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100%;
+  font-family: var(--font-frame);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+}
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+/* Prevent display overrides from breaking the hidden attribute.
+   Must come AFTER the svg { display: block } rule above. */
+[hidden] { display: none !important; }
+
+/* Inherit fonts in form elements (browser default overrides otherwise) */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* ----------------------------------------------------------------
+   ACCESSIBILITY UTILITIES
+   ---------------------------------------------------------------- */
+
+/* Skip to main content — visible on focus only */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+  font-family: var(--font-frame);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  text-decoration: none;
+  border-bottom-right-radius: var(--radius-md);
+  z-index: var(--z-skip);
+  transform: translateY(-100%);
+  transition: transform var(--t-fast);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Screen-reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ----------------------------------------------------------------
+   FOCUS MANAGEMENT
+   Consistent 3 px ring on all interactive elements.
+   Suppressed for mouse users; shown for keyboard/sequential nav.
+   ---------------------------------------------------------------- */
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ================================================================
+   DOC SITE LAYOUT  (.dx-doc-layout)
+   Sticky header + scrollable sidebar + scrollable content.
+   Used by the design system documentation pages.
+   ================================================================ */
+.dx-doc-layout {
+  display: grid;
+  grid-template-rows: var(--header-h) 1fr;
+  grid-template-areas:
+    "header"
+    "body";
+  min-height: 100vh;
+}
+
+.dx-doc-body {
+  grid-area: body;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-areas: "sidebar main";
+  align-items: start;
+  max-width: var(--doc-max);
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* No-sidebar layout variant.
+   Usage: <div class="dx-doc-body dx-doc-body--no-sidebar">
+   Omit the <nav class="dx-sidebar"> element entirely when using this. */
+.dx-doc-body--no-sidebar {
+  grid-template-columns: 1fr;
+  grid-template-areas: "main";
+}
+
+/* Wide no-sidebar layout — max-width unconstrained.
+   For dashboards and tools that need maximum horizontal space.
+   Usage: <div class="dx-doc-body dx-doc-body--no-sidebar-wide">
+   Omit the <nav class="dx-sidebar"> element entirely when using this. */
+.dx-doc-body--no-sidebar-wide {
+  grid-template-columns: 1fr;
+  grid-template-areas: "main";
+  max-width: none;
+}
+
+/* ================================================================
+   TOOL APP LAYOUT  (.dx-app-layout)
+   Full-viewport, fixed chrome — for actual tools (not docs).
+   ================================================================ */
+.dx-app-layout {
+  display: grid;
+  grid-template-rows: var(--header-h) 1fr var(--statusbar-h);
+  grid-template-areas:
+    "header"
+    "body"
+    "statusbar";
+  height: 100vh;
+  overflow: hidden;
+}
+
+.dx-app-body {
+  grid-area: body;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-areas: "sidebar main";
+  overflow: hidden;
+}
+
+/* Optional right panel (inspector / properties) */
+.dx-app-body--with-panel {
+  grid-template-columns: var(--sidebar-w) 1fr var(--panel-w);
+  grid-template-areas: "sidebar main panel";
+}
+
+.dx-app-panel {
+  grid-area: panel;
+  border-left: 1px solid var(--color-border);
+  overflow-y: auto;
+  background-color: var(--color-surface);
+}
+
+/* ================================================================
+   HEADER  (.dx-header)
+   ================================================================ */
+.dx-header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-6);
+  height: var(--header-h);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
+.dx-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: var(--color-text);
+  flex-shrink: 0;
+}
+
+.dx-header__brand:hover {
+  color: var(--color-text);
+}
+
+/* Mark — a small turquoise badge with the "DX" glyph */
+.dx-header__mark {
+  width: 28px;
+  height: 28px;
+  background-color: var(--color-accent);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: var(--weight-bold);
+  color: var(--color-text-on-accent);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.dx-header__wordmark {
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.dx-header__divider {
+  width: 1px;
+  height: 20px;
+  background-color: var(--color-border-strong);
+  margin: 0 var(--space-1);
+  flex-shrink: 0;
+}
+
+.dx-header__subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-weight: var(--weight-regular);
+  line-height: 1;
+}
+
+/* Inline nav (for doc site header) */
+.dx-header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.dx-header__nav-link {
+  display: inline-flex;
+  align-items: center;
+  height: var(--target-md);
+  min-width: var(--target-md);
+  padding: 0 var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  transition: color var(--t-fast), background-color var(--t-fast);
+}
+
+.dx-header__nav-link:hover {
+  color: var(--color-text);
+  background-color: var(--color-accent-muted);
+}
+
+.dx-header__nav-link[aria-current="page"] {
+  color: var(--color-accent);
+  background-color: var(--color-accent-muted);
+  font-weight: var(--weight-semibold);
+}
+
+.dx-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Mobile nav toggle — hidden on desktop, shown at mobile breakpoint */
+.dx-nav-toggle {
+  display: none;
+  flex-shrink: 0;
+}
+
+/* ── Mobile nav dropdown ─────────────────────────────────────
+   Positioned fixed so it drops below the sticky header without
+   pushing page content. Hidden by default via the `hidden` attr.
+   ─────────────────────────────────────────────────────────── */
+.dx-mobile-nav {
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  background: var(--color-surface-raised);
+  border-bottom: 2px solid var(--color-border-strong);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-2) 0;
+}
+
+.dx-mobile-nav__link {
+  display: flex;
+  align-items: center;
+  min-height: var(--target-md);
+  padding: 0 var(--space-6);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: background-color var(--t-fast), color var(--t-fast);
+}
+
+.dx-mobile-nav__link:hover {
+  background: var(--color-accent-muted);
+  color: var(--color-text);
+}
+
+.dx-mobile-nav__link[aria-current="page"] {
+  color: var(--color-accent);
+  background: var(--color-accent-muted);
+  font-weight: var(--weight-semibold);
+  border-left: 3px solid var(--color-accent);
+  padding-left: calc(var(--space-6) - 3px);
+}
+
+.dx-mobile-nav__link:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: -3px;
+}
+
+/* ================================================================
+   SIDEBAR  (.dx-sidebar)
+   ================================================================ */
+.dx-sidebar {
+  grid-area: sidebar;
+  width: var(--sidebar-w);
+  height: calc(100vh - var(--header-h));
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--space-5) var(--space-3);
+  border-right: 1px solid var(--color-border);
+  position: sticky;
+  top: var(--header-h);
+  background-color: var(--color-bg);
+  flex-shrink: 0;
+}
+
+.dx-sidebar-section {
+  margin-bottom: var(--space-6);
+}
+
+.dx-sidebar-section:last-child {
+  margin-bottom: 0;
+}
+
+.dx-sidebar-label {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+  padding: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-1);
+}
+
+.dx-sidebar-nav {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dx-sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target-md);
+  min-width: var(--target-md);
+  padding: 0 var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: color var(--t-fast), background-color var(--t-fast);
+}
+
+.dx-sidebar-nav a:hover {
+  color: var(--color-text);
+  background-color: var(--color-accent-muted);
+}
+
+.dx-sidebar-nav a[aria-current="page"],
+.dx-sidebar-nav a.active {
+  color: var(--color-accent);
+  background-color: var(--color-accent-muted);
+  font-weight: var(--weight-semibold);
+}
+
+/* Sidebar divider */
+.dx-sidebar-divider {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: var(--space-3) var(--space-3);
+}
+
+/* ================================================================
+   MAIN CONTENT AREA  (.dx-main)
+   ================================================================ */
+.dx-main {
+  grid-area: main;
+  padding: var(--space-8) var(--space-10);
+  min-width: 0;   /* prevent grid blowout */
+  overflow-y: auto;
+}
+
+.dx-main--full {
+  padding: 0;
+}
+
+/* Content width constraint within main */
+.dx-content {
+  max-width: var(--content-max);
+}
+
+/* ----------------------------------------------------------------
+   Doc section — each logical section within a doc page
+   ---------------------------------------------------------------- */
+.dx-section {
+  margin-bottom: var(--space-12);
+}
+
+.dx-section:last-child {
+  margin-bottom: var(--space-20);
+}
+
+/* Demo block — live rendered example of a component */
+.dx-demo {
+  padding: var(--space-6);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.dx-demo + pre,
+.dx-demo + .code-block {
+  border-top: none;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  margin-top: 0;
+}
+
+/* Demo variant — centered content */
+.dx-demo--center {
+  justify-content: center;
+}
+
+/* Demo variant — column stack */
+.dx-demo--stack {
+  flex-direction: column;
+}
+
+/* Demo variant — dark background to test on dark */
+.dx-demo--dark {
+  background-color: var(--color-bg);
+}
+
+/* Demo variant — for showing full-width things (tables, etc.) */
+.dx-demo--wide {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ================================================================
+   STATUS BAR  (.dx-statusbar)
+   ================================================================ */
+.dx-statusbar {
+  grid-area: statusbar;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 0 var(--space-5);
+  height: var(--statusbar-h);
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-frame);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  overflow: hidden;
+}
+
+.dx-statusbar__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.dx-statusbar__sep {
+  color: var(--color-border-strong);
+  user-select: none;
+}
+
+.dx-statusbar__right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* ================================================================
+   PAGE TYPOGRAPHY
+   Styles for heading/body content within .dx-main.
+   ================================================================ */
+.dx-main h1, .page-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.dx-main h2 {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+  color: var(--color-text);
+  margin-top: var(--space-12);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dx-main h2:first-child {
+  margin-top: 0;
+}
+
+.dx-main h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-3);
+}
+
+.dx-main h4 {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-2);
+}
+
+.dx-main p {
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-4);
+  max-width: 72ch;
+}
+
+/* :where() zeroes out .dx-main's specificity contribution (0,0,0), so the
+   combined rule is only 0,1,1 — preview.css rules (0,2,0+) always win.
+   Without this, :not(.btn) adds an extra class weight → 0,2,1 which
+   silently beats preview nav selectors and bleeds frame colors in. */
+:where(.dx-main) a:not(.btn) {
+  color: var(--color-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--t-fast);
+}
+
+:where(.dx-main) a:not(.btn):hover {
+  color: var(--color-accent-hover);
+}
+
+.dx-main ul,
+.dx-main ol {
+  color: var(--color-text-muted);
+  padding-left: var(--space-6);
+  margin-bottom: var(--space-4);
+}
+
+.dx-main li {
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-2);
+}
+
+.dx-main hr,
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: var(--space-8) 0;
+}
+
+/* Lead / intro text */
+.lead {
+  font-size: var(--text-md);
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+  max-width: 65ch;
+  margin-bottom: var(--space-6);
+}
+
+/* Page eyebrow / label above title */
+.eyebrow {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-2);
+}
+
+/* ================================================================
+   RESPONSIVE BREAKPOINTS
+   ================================================================ */
+/* Tablets and mid-size laptops: narrow sidebar + hamburger nav */
+@media (max-width: 1024px) {
+  .dx-doc-body:not(.dx-doc-body--no-sidebar) {
+    grid-template-columns: 220px 1fr;
+  }
+
+  .dx-sidebar {
+    width: 220px;
+  }
+
+  /* Collapse inline nav to hamburger at this breakpoint */
+  .dx-header__nav {
+    display: none;
+  }
+
+  .dx-nav-toggle {
+    display: inline-flex;
+  }
+
+  .dx-main {
+    padding: var(--space-6) var(--space-8);
+  }
+}
+
+/* Mobile: single-column layout, sidebar hidden */
+@media (max-width: 768px) {
+  .dx-doc-body:not(.dx-doc-body--no-sidebar) {
+    grid-template-columns: 1fr;
+    grid-template-areas: "main";
+  }
+
+  .dx-sidebar {
+    display: none;
+  }
+
+  .dx-main {
+    padding: var(--space-5) var(--space-4);
+  }
+}
+
+/* ================================================================
+   REDUCED MOTION
+   Must cover all animated properties system-wide.
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ================================================================
+   FORCED COLORS  (Windows High Contrast)
+   ================================================================ */
+@media (forced-colors: active) {
+  .skip-link {
+    border: 2px solid ButtonText;
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+
+  .dx-header,
+  .dx-sidebar,
+  .dx-statusbar {
+    border-color: ButtonText;
+  }
+
+  .dx-sidebar-nav a[aria-current="page"] {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+}
+
+/* ================================================================
+   PRINT
+   ================================================================ */
+@media print {
+  .dx-header,
+  .dx-sidebar,
+  .dx-statusbar {
+    display: none;
+  }
+
+  .dx-doc-body {
+    display: block;
+  }
+
+  .dx-main {
+    padding: 0;
+    overflow: visible;
+  }
+
+  body {
+    background: white;
+    color: black;
+    font-size: 11pt;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #555;
+  }
+
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
+  }
+}

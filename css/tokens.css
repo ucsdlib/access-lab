@@ -1,0 +1,413 @@
+/* ================================================================
+   DX TOOLS DESIGN SYSTEM — TOKENS
+   UC San Diego Campus Brand / Tool Instrument Layer
+
+   Single source of truth for all design values.
+   Import this file first, before any other design system CSS.
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   TYPOGRAPHY
+   ---------------------------------------------------------------- */
+:root {
+  --font-frame:   'Atkinson Hyperlegible', 'Arial', sans-serif;
+  --font-preview: 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+  --font-code:    'JetBrains Mono', 'Fira Code', 'Consolas', 'Courier New', monospace;
+
+  /* Type scale — tool interfaces run large */
+  --text-xs:   0.875rem;   /* 14px — badges, metadata; absolute minimum */
+  --text-sm:   1rem;       /* 16px — helper text, captions              */
+  --text-base: 1.125rem;   /* 18px — body copy, form labels             */
+  --text-md:   1.25rem;    /* 20px — emphasized body                    */
+  --text-lg:   1.5rem;     /* 24px — section headings                   */
+  --text-xl:   1.875rem;   /* 30px — page headings                      */
+  --text-2xl:  2.5rem;     /* 40px — display headings                   */
+  --text-3xl:  3.25rem;    /* 52px — hero / hero stats                  */
+  --text-code: 0.875rem;   /* 14px — monospace code                     */
+
+  /* Line heights */
+  --leading-none:   1;
+  --leading-tight:  1.2;
+  --leading-snug:   1.4;
+  --leading-normal: 1.6;
+  --leading-loose:  1.8;
+
+  /* Font weights */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+}
+
+/* ----------------------------------------------------------------
+   SPACING  (4 px base grid)
+   ---------------------------------------------------------------- */
+:root {
+  --space-1:  0.25rem;   /*  4px */
+  --space-2:  0.5rem;    /*  8px */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1rem;      /* 16px */
+  --space-5:  1.25rem;   /* 20px */
+  --space-6:  1.5rem;    /* 24px */
+  --space-8:  2rem;      /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+  --space-20: 5rem;      /* 80px */
+}
+
+/* ----------------------------------------------------------------
+   BORDER RADIUS
+   ---------------------------------------------------------------- */
+:root {
+  --radius-sm:   3px;
+  --radius-md:   6px;
+  --radius-lg:   8px;
+  --radius-xl:   12px;
+  --radius-2xl:  16px;
+  --radius-full: 9999px;
+}
+
+/* ----------------------------------------------------------------
+   TRANSITIONS
+   ---------------------------------------------------------------- */
+:root {
+  --t-fast:   120ms ease;
+  --t-normal: 200ms ease;
+  --t-slow:   300ms ease;
+}
+
+/* ----------------------------------------------------------------
+   LAYOUT DIMENSIONS
+   ---------------------------------------------------------------- */
+:root {
+  --header-h:    56px;
+  --statusbar-h: 32px;
+  --sidebar-w:   264px;
+  --panel-w:     300px;
+  --content-max: 900px;
+  --doc-max:     1200px;
+
+  /* Touch target minimums (WCAG 2.5.5) */
+  --target-sm: 36px;   /* compact controls only */
+  --target-md: 44px;   /* default minimum        */
+  --target-lg: 52px;   /* large / primary actions */
+}
+
+/* ----------------------------------------------------------------
+   Z-INDEX SCALE
+   ---------------------------------------------------------------- */
+:root {
+  --z-base:    0;
+  --z-raised:  1;
+  --z-sticky:  10;
+  --z-overlay: 100;
+  --z-modal:   200;
+  --z-tooltip: 300;
+  --z-toast:   400;
+  --z-skip:    500;
+}
+
+/* ================================================================
+   BRAND COLOR PALETTE
+   Static, mode-independent. Source of truth for campus colors.
+   ================================================================ */
+:root {
+  --brand-navy:      #182B49;   /* UC San Diego Navy      PMS 2767 */
+  --brand-blue:      #00629B;   /* UC San Diego Blue      PMS 3015 */
+  --brand-yellow:    #FFCD00;   /* UC San Diego Yellow    PMS 116  */
+  --brand-gold:      #C69214;   /* UC San Diego Gold      PMS 1245 */
+  --brand-turquoise: #00C6D7;   /* Turquoise              PMS 3115 */
+  --brand-magenta:   #D462AD;   /* Magenta                PMS 674  */
+  --brand-sand:      #F5F0E6;   /* Sand                   PMS 9285 */
+  --brand-citron:    #F3E500;   /* Citron                 PMS 3945 */
+  --brand-orange:    #FC8900;   /* Orange                 PMS 144  */
+  --brand-green:     #6E963B;   /* Green                  PMS 7490 */
+  --brand-gray:      #747678;   /* Cool Gray 9            PMS CG9  */
+  --brand-stone:     #B6B1A9;   /* Stone                  PMS 401  */
+}
+
+/* ================================================================
+   SEMANTIC COLOR TOKENS — LIGHT MODE  (default)
+
+   Color strategy: UC San Diego Blue as primary interactive color.
+   Sand background provides warmth. Navy for text depth.
+
+   Contrast ratios verified against WCAG 2.1:
+     --color-text on --color-surface:  ~14.5:1 ✅ AAA
+     --color-text-muted on sand:       ~9:1    ✅ AAA
+     --color-text-subtle on sand:      ~7.2:1  ✅ AAA
+     white on --color-accent (#00629B): ~7.7:1 ✅ AAA
+   ================================================================ */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --color-bg:              var(--brand-sand);
+  --color-surface:         #FFFFFF;
+  --color-surface-raised:  #FFFFFF;
+  --color-surface-overlay: #ede8de;
+
+  --color-border:        #DDE3EC;
+  --color-border-strong: #B8C4D4;
+
+  /* Text — all meet AAA (7:1) against --color-bg */
+  --color-text:         #182B49;
+  --color-text-muted:   #2d4464;
+  --color-text-subtle:  #2d4464;   /* = muted — 3 AAA tiers impossible on sand/white */
+  --color-text-on-accent:    #FFFFFF;
+  --color-text-on-secondary: #182B49;
+  --color-text-on-danger:    #FFFFFF;
+  --color-text-on-success:   #FFFFFF;
+
+  /* Primary interactive — UC San Diego Blue */
+  --color-accent:        var(--brand-blue);
+  --color-accent-hover:  #004e7a;
+  --color-accent-active: #003d60;
+  --color-accent-muted:  rgba(0, 98, 155, 0.08);
+  --color-accent-strong: rgba(0, 98, 155, 0.16);
+
+  /* Secondary interactive — Gold */
+  --color-secondary:        var(--brand-gold);
+  --color-secondary-hover:  #a87a10;
+  --color-secondary-active: #8e650c;
+  --color-secondary-muted:  rgba(198, 146, 20, 0.10);
+
+  /* Semantic status */
+  --color-danger:       #b91c1c;
+  --color-danger-hover: #991717;
+  --color-danger-muted: rgba(185, 28, 28, 0.08);
+  --color-danger-text:  #b91c1c;
+
+  --color-success:       #3a6e18;
+  --color-success-hover: #2d5712;
+  --color-success-muted: rgba(58, 110, 24, 0.08);
+  --color-success-text:  #3a6e18;
+
+  --color-warning:       #9a4e00;
+  --color-warning-hover: #7a3d00;
+  --color-warning-muted: rgba(154, 78, 0, 0.08);
+  --color-warning-text:  #9a4e00;
+
+  --color-info:       var(--brand-blue);
+  --color-info-muted: rgba(0, 98, 155, 0.08);
+  --color-info-text:  var(--brand-blue);
+
+  /* Focus ring — 3px, high visibility */
+  --color-focus: var(--brand-blue);
+  --focus-ring:  0 0 0 3px rgba(0, 98, 155, 0.35);
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(24, 43, 73, 0.06);
+  --shadow-sm: 0 2px 4px rgba(24, 43, 73, 0.08), 0 1px 2px rgba(24, 43, 73, 0.05);
+  --shadow-md: 0 4px 12px rgba(24, 43, 73, 0.10), 0 2px 4px rgba(24, 43, 73, 0.06);
+  --shadow-lg: 0 8px 24px rgba(24, 43, 73, 0.12), 0 4px 8px rgba(24, 43, 73, 0.08);
+
+  /* Tactile button shadow — bottom edge creates physical press feel */
+  --shadow-btn:        0 3px 0 0 rgba(24, 43, 73, 0.18);
+  --shadow-btn-accent: 0 3px 0 0 rgba(0, 38, 60, 0.28);
+  --shadow-btn-active: 0 1px 0 0 rgba(24, 43, 73, 0.18);
+
+  /* Featured panel — accent-color shadow ring replaces stripe */
+  --shadow-featured:           var(--shadow-sm), 0 0 0 1.5px var(--color-accent);
+  --shadow-featured-secondary: var(--shadow-sm), 0 0 0 1.5px var(--color-secondary);
+  --shadow-featured-danger:    var(--shadow-sm), 0 0 0 1.5px var(--color-danger);
+  --shadow-featured-success:   var(--shadow-sm), 0 0 0 1.5px var(--color-success);
+
+  scrollbar-color: var(--color-border-strong) var(--color-bg);
+  scrollbar-width: thin;
+}
+
+/* ================================================================
+   SEMANTIC COLOR TOKENS — DARK MODE
+
+   Inverted brand: Turquoise becomes the primary interactive color.
+   Brand accent colors (Turquoise, Citron) serve as primary CTAs.
+   Navy depth stack provides the tool-instrument feel.
+
+   Contrast ratios:
+     --color-text on --color-bg:       ~22:1  ✅ AAA
+     --color-text-muted on --color-bg: ~7.5:1 ✅ AAA
+     black on --color-accent:          ~10:1  ✅ AAA
+   ================================================================ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --color-bg:              #0d1b2e;
+    --color-surface:         #182B49;
+    --color-surface-raised:  #1e3460;
+    --color-surface-overlay: #243d72;
+
+    --color-border:        rgba(255, 255, 255, 0.10);
+    --color-border-strong: rgba(255, 255, 255, 0.20);
+
+    --color-text:          #FFFFFF;
+    --color-text-muted:    #9DB8D4;
+    --color-text-subtle:   #9DB8D4;   /* = muted — 3 AAA tiers impossible on dark bg */
+    --color-text-on-accent:     #000000;
+    --color-text-on-secondary:  #000000;
+    --color-text-on-danger:     #FFFFFF;
+    --color-text-on-success:    #000000;
+
+    --color-accent:        #00C6D7;
+    --color-accent-hover:  #00d9ec;
+    --color-accent-active: #00afbe;
+    --color-accent-muted:  rgba(0, 198, 215, 0.14);
+    --color-accent-strong: rgba(0, 198, 215, 0.28);
+
+    --color-secondary:        #F3E500;
+    --color-secondary-hover:  #fff600;
+    --color-secondary-active: #d4c800;
+    --color-secondary-muted:  rgba(243, 229, 0, 0.12);
+
+    --color-danger:       #ff6b6b;
+    --color-danger-hover: #ff8585;
+    --color-danger-muted: rgba(255, 107, 107, 0.15);
+    --color-danger-text:  #ff6b6b;
+
+    --color-success:       #7ec850;
+    --color-success-hover: #92d864;
+    --color-success-muted: rgba(126, 200, 80, 0.15);
+    --color-success-text:  #7ec850;
+
+    --color-warning:       #FC8900;
+    --color-warning-hover: #ff9a1a;
+    --color-warning-muted: rgba(252, 137, 0, 0.15);
+    --color-warning-text:  #FC8900;
+
+    --color-info:       #00C6D7;
+    --color-info-muted: rgba(0, 198, 215, 0.15);
+    --color-info-text:  #00C6D7;
+
+    --color-focus: #00C6D7;
+    --focus-ring:  0 0 0 3px rgba(0, 198, 215, 0.45);
+
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.65), 0 2px 4px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.75), 0 4px 8px rgba(0, 0, 0, 0.55);
+
+    --shadow-btn:        0 3px 0 0 rgba(0, 0, 0, 0.45);
+    --shadow-btn-accent: 0 3px 0 0 rgba(0, 80, 90, 0.6);
+    --shadow-btn-active: 0 1px 0 0 rgba(0, 0, 0, 0.4);
+
+    --shadow-featured:           var(--shadow-sm), 0 0 0 1.5px #00C6D7;
+    --shadow-featured-secondary: var(--shadow-sm), 0 0 0 1.5px #F3E500;
+    --shadow-featured-danger:    var(--shadow-sm), 0 0 0 1.5px #ff6b6b;
+    --shadow-featured-success:   var(--shadow-sm), 0 0 0 1.5px #7ec850;
+
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+    scrollbar-width: thin;
+  }
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg:              #0d1b2e;
+  --color-surface:         #182B49;
+  --color-surface-raised:  #1e3460;
+  --color-surface-overlay: #243d72;
+
+  --color-border:        rgba(255, 255, 255, 0.10);
+  --color-border-strong: rgba(255, 255, 255, 0.20);
+
+  --color-text:          #FFFFFF;
+  --color-text-muted:    #9DB8D4;
+  --color-text-subtle:   #9DB8D4;   /* = muted — 3 AAA tiers impossible on dark bg */
+  --color-text-on-accent:     #000000;
+  --color-text-on-secondary:  #000000;
+  --color-text-on-danger:     #FFFFFF;
+  --color-text-on-success:    #000000;
+
+  --color-accent:        #00C6D7;
+  --color-accent-hover:  #00d9ec;
+  --color-accent-active: #00afbe;
+  --color-accent-muted:  rgba(0, 198, 215, 0.14);
+  --color-accent-strong: rgba(0, 198, 215, 0.28);
+
+  --color-secondary:        #F3E500;
+  --color-secondary-hover:  #fff600;
+  --color-secondary-active: #d4c800;
+  --color-secondary-muted:  rgba(243, 229, 0, 0.12);
+
+  --color-danger:       #ff6b6b;
+  --color-danger-hover: #ff8585;
+  --color-danger-muted: rgba(255, 107, 107, 0.15);
+  --color-danger-text:  #ff6b6b;
+
+  --color-success:       #7ec850;
+  --color-success-hover: #92d864;
+  --color-success-muted: rgba(126, 200, 80, 0.15);
+  --color-success-text:  #7ec850;
+
+  --color-warning:       #FC8900;
+  --color-warning-hover: #ff9a1a;
+  --color-warning-muted: rgba(252, 137, 0, 0.15);
+  --color-warning-text:  #FC8900;
+
+  --color-info:       #00C6D7;
+  --color-info-muted: rgba(0, 198, 215, 0.15);
+  --color-info-text:  #00C6D7;
+
+  --color-focus: #00C6D7;
+  --focus-ring:  0 0 0 3px rgba(0, 198, 215, 0.45);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.65), 0 2px 4px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.75), 0 4px 8px rgba(0, 0, 0, 0.55);
+
+  --shadow-btn:        0 3px 0 0 rgba(0, 0, 0, 0.45);
+  --shadow-btn-accent: 0 3px 0 0 rgba(0, 80, 90, 0.6);
+  --shadow-btn-active: 0 1px 0 0 rgba(0, 0, 0, 0.4);
+
+  --shadow-featured:           var(--shadow-sm), 0 0 0 1.5px #00C6D7;
+  --shadow-featured-secondary: var(--shadow-sm), 0 0 0 1.5px #F3E500;
+  --shadow-featured-danger:    var(--shadow-sm), 0 0 0 1.5px #ff6b6b;
+  --shadow-featured-success:   var(--shadow-sm), 0 0 0 1.5px #7ec850;
+
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  scrollbar-width: thin;
+}
+
+/* ================================================================
+   PREVIEW AREA TOKENS
+   Scoped to .dx-preview. Always brand-faithful UC San Diego light mode,
+   regardless of the surrounding frame's color mode.
+   ================================================================ */
+.dx-preview {
+  color-scheme: light;
+
+  --color-bg:              #FFFFFF;
+  --color-surface:         #FFFFFF;
+  --color-surface-raised:  #FFFFFF;
+  --color-surface-overlay: var(--brand-sand);
+
+  --color-border:        #DDE3EC;
+  --color-border-strong: #B8C4D4;
+
+  --color-text:         var(--brand-navy);
+  --color-text-muted:   #2d4464;
+  --color-text-subtle:  #2d4464;   /* = muted — 3 AAA tiers impossible on sand/white */
+  --color-text-on-accent:    #FFFFFF;
+  --color-text-on-secondary: var(--brand-navy);
+
+  --color-accent:        var(--brand-blue);
+  --color-accent-hover:  #004e7a;
+  --color-accent-muted:  rgba(0, 98, 155, 0.10);
+
+  --color-secondary:        var(--brand-yellow);
+  --color-secondary-hover:  #e5b800;
+  --color-secondary-muted:  rgba(255, 205, 0, 0.2);
+
+  --shadow-sm: 0 2px 4px rgba(24, 43, 73, 0.08);
+  --shadow-md: 0 4px 12px rgba(24, 43, 73, 0.10);
+
+  font-family: var(--font-preview);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--brand-navy);
+  background-color: #FFFFFF;
+}
