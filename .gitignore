@@ -1,0 +1,19 @@
+# AI session data
+.claude/
+
+# Local reference materials — not part of the project
+_references/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
