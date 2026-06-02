@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyboard Navigation | Access Lab</title>
+
+  <script>const t=localStorage.getItem('dx-theme');document.documentElement.setAttribute('data-theme',t||'light');</script>
+
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/frame.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/preview.css">
+  <link rel="stylesheet" href="css/code.css">
+  <link rel="stylesheet" href="css/access-lab.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <div class="dx-doc-layout">
+
+    <!-- ── Header ──────────────────────────────────────────────── -->
+    <header class="dx-header" role="banner">
+      <a href="index.html" class="dx-header__brand" aria-label="The Access Lab home">
+        <span class="dx-header__mark" aria-hidden="true">DX</span>
+        <span class="dx-header__wordmark">Access Lab</span>
+      </a>
+
+      <nav class="dx-header__nav" aria-label="Site sections">
+        <a href="index.html" class="dx-header__nav-link">Home</a>
+        <a href="seeing-hearing.html" class="dx-header__nav-link">Seeing &amp; Hearing</a>
+        <a href="keyboard-navigation.html" class="dx-header__nav-link" aria-current="page">Keyboard Navigation</a>
+      </nav>
+
+      <div class="dx-header__actions">
+        <button class="btn btn--ghost btn--icon" data-theme-toggle
+                aria-label="Switch to light mode" aria-pressed="false">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ── Body ─────────────────────────────────────────────────── -->
+    <div class="dx-doc-body dx-doc-body--no-sidebar">
+      <main id="main" class="dx-main">
+
+        <!-- Page intro -->
+        <div class="dx-content">
+          <span class="eyebrow">Access Lab &middot; Experience 02</span>
+          <h1 class="page-title">Keyboard Navigation</h1>
+          <p class="lead">Navigate a library services widget using only your keyboard, and discover why some options are reachable and others are not.</p>
+          <p>This activity contains one intentionally inaccessible element. That element is the lesson.</p>
+        </div>
+
+        <!-- ── Challenge preview frame ─────────────────────────────
+             The mock "Library Services" widget has three items.
+             Two are real <button> elements — keyboard accessible.
+             One is a <div onclick> — intentionally NOT accessible.
+             Do NOT add tabindex to the div. The unreachability is the point.
+        ──────────────────────────────────────────────────────────── -->
+        <div class="preview-container al-challenge-frame">
+
+          <div class="preview-toolbar">
+            <div class="preview-toolbar__dots" aria-hidden="true">
+              <span class="preview-toolbar__dot"></span>
+              <span class="preview-toolbar__dot"></span>
+              <span class="preview-toolbar__dot"></span>
+            </div>
+            <span class="preview-toolbar__label">Library website &#8212; Services widget</span>
+          </div>
+
+          <div class="al-preview-display">
+            <div class="al-services-box">
+              <h3 class="al-hours-heading">Library Services</h3>
+              <div class="al-services-list">
+
+                <!-- Real <button> — keyboard accessible -->
+                <button class="al-service-item" data-item="1">Reserve a study room</button>
+
+                <!--
+                  INTENTIONALLY a <div>, not a <button> — demonstrates keyboard inaccessibility.
+                  This element is genuinely unreachable via the Tab key by design.
+                  Do NOT add tabindex, role="button", or aria-label here.
+                  (WCAG 2.1 SC 2.1.1 Keyboard, Level A; SC 4.1.2 Name, Role, Value, Level A)
+                -->
+                <div class="al-service-item" onclick="window.selectItem(2)" data-item="2">
+                  Interlibrary loan
+                  <span class="al-mouse-only-label" hidden>mouse only</span>
+                </div>
+
+                <!-- Real <button> — keyboard accessible -->
+                <button class="al-service-item" data-item="3">Ask a librarian</button>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="al-preview-controls">
+            <div class="al-steps">
+
+              <div class="al-step">
+                <span class="al-step__num" aria-hidden="true">1</span>
+                <div class="al-step__body">
+                  <p class="al-step__prompt">Use only your keyboard. Press <kbd>Tab</kbd> to move between options, <kbd>Enter</kbd> to select. Try to reach all three services.</p>
+                  <p class="al-step__hint">Click somewhere neutral first to clear focus, then Tab in from the top.</p>
+                  <div id="s3-feedback" hidden></div>
+                </div>
+              </div>
+
+              <div class="al-step">
+                <span class="al-step__num" aria-hidden="true">2</span>
+                <div class="al-step__body">
+                  <p class="al-step__prompt">Found a dead end? See what&#8217;s happening in the code.</p>
+                  <div class="al-step__actions">
+                    <button id="s3-reveal-btn" class="btn btn--ghost btn--sm" hidden>
+                      Show what&#8217;s happening &#8594;
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div><!-- /preview-container -->
+
+        <!-- Code explanation (shown when s3Revealed = true) -->
+        <div id="s3-explanation" class="al-explanation" hidden>
+          &#8220;Reserve a study room&#8221; and &#8220;Ask a librarian&#8221; are real
+          <code class="al-code-tag al-code-tag--green">&lt;button&gt;</code>
+          elements &#8212; naturally focusable and keyboard-activatable.
+          &#8220;Interlibrary loan&#8221; is a
+          <code class="al-code-tag al-code-tag--orange">&lt;div&gt;</code>
+          with an
+          <code class="al-code-tag al-code-tag--orange">onclick</code>.
+          It looks identical on screen but is invisible to keyboard navigation.
+        </div>
+
+        <!-- What this reveals -->
+        <div class="panel panel--featured al-insight-panel" role="note">
+          <div class="panel__header">
+            <div class="panel__icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+            </div>
+            <h2 class="panel__title">What this reveals</h2>
+          </div>
+          <div class="panel__body">
+            <p>You can see all three options. Tab reaches &#8220;Reserve a study room&#8221; and &#8220;Ask a librarian.&#8221; &#8220;Interlibrary loan&#8221; is skipped entirely. Without a mouse, there is no way to reach it.</p>
+            <p>This happens because &#8220;Interlibrary loan&#8221; is a <code>&lt;div&gt;</code> element with an <code>onclick</code> handler. Unlike <code>&lt;button&gt;</code>, a <code>&lt;div&gt;</code> is not in the keyboard focus sequence by default. Screen readers also cannot announce it as an interactive control.</p>
+            <p>Changing <code>&lt;div&gt;</code> to <code>&lt;button&gt;</code> is one word in the code. For a keyboard user, that word determines whether a library service is reachable.</p>
+          </div>
+        </div>
+
+        <!-- Key ideas -->
+        <div class="panel panel--featured al-key-ideas-panel" role="note">
+          <div class="panel__header">
+            <div class="panel__icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+            </div>
+            <h3 class="panel__title">Key ideas</h3>
+          </div>
+          <div class="panel__body">
+            <ul>
+              <li>Keyboard-only navigation is the baseline test for most assistive technologies. If Tab cannot reach it, the option is effectively invisible.</li>
+              <li>A <code>&lt;div onclick&gt;</code> looks and behaves like a button for mouse users. For keyboard and screen reader users, it does not exist as an interactive element.</li>
+              <li>One word in the code (<code>div</code> &#8594; <code>button</code>) opens or closes access to a library service for every patron who navigates without a mouse.</li>
+              <li>26% of people with disabilities rely on some form of keyboard-based navigation. Keyboard accessibility is not an edge case.</li>
+            </ul>
+          </div>
+        </div>
+
+
+        <!-- ── Key standards (take-aways) ─────────────────────── -->
+        <div class="panel panel--featured al-insight-panel" role="note" style="margin-top: var(--space-6);">
+          <div class="panel__header">
+            <div class="panel__icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <h2 class="panel__title">Key standards</h2>
+          </div>
+          <div class="panel__body">
+            <p>WCAG (Web Content Accessibility Guidelines) is the international standard for digital accessibility. Each success criterion is assigned a conformance level: A is the baseline, AA is what most organizations target, and AAA covers enhanced requirements. This activity covered two WCAG criteria:</p>
+            <div class="table-wrap">
+              <table class="table table--bordered">
+                <thead>
+                  <tr>
+                    <th>Criterion</th>
+                    <th class="al-cell-center">Level</th>
+                    <th>What it requires</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>2.1.1</strong> Keyboard</td>
+                    <td class="al-cell-center"><span class="badge badge--neutral">A</span></td>
+                    <td>All functionality is available from a keyboard</td>
+                  </tr>
+                  <tr>
+                    <td><strong>4.1.2</strong> Name, Role, Value</td>
+                    <td class="al-cell-center"><span class="badge badge--neutral">A</span></td>
+                    <td>UI components must expose name, role, and state to assistive technologies</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>The full WCAG 2.1 specification includes 78 success criteria across all three levels.</p>
+          </div>
+        </div>
+
+        <!-- ── Experience footer navigation ────────────────────── -->
+        <nav class="al-exp-footer-nav" aria-label="Experience navigation">
+          <a href="index.html" class="btn btn--ghost btn--sm">&#8592; All experiences</a>
+        </nav>
+
+      </main>
+    </div><!-- /dx-doc-body -->
+  </div><!-- /dx-doc-layout -->
+
+  <script src="js/lucide.min.js"></script>
+  <script src="js/theme.js" defer></script>
+  <script src="js/keyboard-nav.js" defer></script>
+</body>
+</html>

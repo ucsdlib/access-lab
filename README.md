@@ -1,8 +1,6 @@
 # The Access Lab
 
-An experiential introduction to digital accessibility for UC San Diego Library staff. Four interactive stations let users encounter real accessibility barriers -- white-on-white text, image-only document scans, mouse-only interactive elements -- and understand why they exist and what fixes them.
-
-The same library hours content runs through all four stations. Each station presents the same information under different conditions, so participants see how presentation choices determine who can access the same content.
+An experiential introduction to digital accessibility for UC San Diego Library staff. A homepage links to distinct experiences, each demonstrating a different accessibility barrier -- white-on-white text, image-only document scans, keyboard-unreachable elements -- and explaining what causes it and what fixes it.
 
 Built on the UC San Diego DX Tools design system. No build step, no framework, no dependencies beyond the files in this repo.
 
@@ -10,35 +8,34 @@ Built on the UC San Diego DX Tools design system. No build step, no framework, n
 
 ## What it is
 
-The Access Lab is a single-page educational tool. A patron, staff member, or workshop participant works through four stations in order, each presenting a real accessibility scenario and asking them to interact with it directly before explaining the underlying issue.
+The Access Lab is a multi-page educational site. A patron, staff member, or workshop participant works through one or more experiences. Each experience presents a real accessibility scenario and asks them to interact with it directly before explaining the underlying issue.
 
-The goal is experiential, not instructional. Users encounter the barrier first, then learn why it exists -- rather than being told about it abstractly.
+The goal is experiential, not instructional. Users encounter the barrier first, then learn why it exists -- rather than being told about it abstractly. The site is designed to grow: new experiences can be added without touching existing ones.
 
 ---
 
-## The four stations
+## The pages
 
-### 01 -- Seeing
-A library hours display rendered as white text on a white background. Visually invisible; perfectly readable by a screen reader and copyable to the clipboard. Demonstrates that accessibility gaps are often mismatches between how content is stored and how a particular reader receives it.
+### `index.html` -- Homepage
+The entry point. Introduces the Access Lab and links to all available experiences via a 2-column card grid. Also contains "The Reframe" and "For library workers specifically" framing content that applies to all experiences.
 
-Includes a contrast ratio demo table and a color-vision simulation showing how the same content reads under color-vision deficiency.
+### `seeing-hearing.html` -- Experience 01: Seeing and Hearing Information
+A 2-activity station experience using a library hours page as content.
 
-**Interactive elements:** "Simulate screen reader" panel with Web Speech API playback; "Reveal to sighted reader" color transition; "Library events" and "Holiday closures" buttons (also white-on-white); live accessibility status badges.
+**Activity 01 -- Seeing:** The hours are rendered white-on-white. Visually invisible; perfectly readable by a screen reader. Includes a contrast ratio demo table and a color-vision simulation.
 
-### 02 -- Hearing
-A library hours display toggled between image-only and real-text modes. Both look identical on screen. Only the real-text version can be read aloud, copied, or searched. Demonstrates that saving content as an image removes every form of access beyond looking at it.
+**Activity 02 -- Hearing:** The same hours toggled between image-only and real-text modes. Both look identical on screen. Only the real-text version can be read aloud, copied, or searched.
 
-**Interactive elements:** Image/text mode toggle; "Try to copy the hours" and "Search for Saturday" actions with success/failure feedback; screen reader simulation showing what a screen reader announces in each mode ("Image." vs. the full hours readout).
+**Interactive elements (both activities):** Screen reader simulation with Web Speech API playback; copy test; reveal toggle (Activity 01); image/text mode toggle (Activity 02); live accessibility status badges.
 
-### 03 -- Navigating
-A library hours display with no heading, followed by two action items styled to look identical: "Library events" (a `<button>`) and "Holiday closures" (a `<div onclick>`). Tab navigation reaches the button and skips the div. Demonstrates that visual appearance and keyboard reachability are independent -- and that missing heading structure is the same category of problem as a keyboard-unreachable element.
+**Take-aways:** WCAG criteria table (1.4.3, 1.4.6, 1.1.1, 1.4.5); cross-experience navigation.
 
-**Interactive elements:** Keyboard-navigable items; per-item feedback messages; "Show what's happening" explanation with inline code comparison.
+### `keyboard-navigation.html` -- Experience 02: Keyboard Navigation
+A single-activity experience using a mock "Library Services" widget. Three services (Reserve a study room, Interlibrary loan, Ask a librarian) are styled identically. Only two are reachable by Tab -- the third is a `<div onclick>`.
 
-### 04 -- The Take-aways
-The resolved version: library hours with a proper `<h3>`, real text, and two accessible `<button>` elements. Closes with a reframe about accessibility as mission work, a "For library workers" callout, and a compact WCAG 2.1 reference table covering the six criteria demonstrated across the three activities.
+**Interactive elements:** Keyboard-navigable service items; per-item feedback; "Show what's happening" code explanation.
 
-**No interactive elements** -- fully static.
+**Take-aways:** WCAG criteria table (2.1.1, 4.1.2); cross-experience navigation.
 
 ---
 
@@ -52,7 +49,7 @@ python3 -m http.server 4400
 
 The `.claude/launch.json` file records this configuration for tooling that reads it.
 
-The tool also works from `file://` -- there are no server-side dependencies. The one caveat is that Web Speech API playback (the "Simulate screen reader" button in stations 1 and 2) requires a non-`file://` origin in some browsers; Chrome works, Firefox is more restrictive.
+The tool also works from `file://` -- there are no server-side dependencies. The one caveat is that Web Speech API playback (the "Simulate screen reader" button in Experience 01) requires a non-`file://` origin in some browsers; Chrome works, Firefox is more restrictive.
 
 ---
 
@@ -60,28 +57,32 @@ The tool also works from `file://` -- there are no server-side dependencies. The
 
 ```
 access-lab/
-|-- index.html              <- the entire tool; one page, four tabpanels
+|-- index.html                  <- homepage (experience directory)
+|-- seeing-hearing.html         <- Experience 01 (color contrast + image/text)
+|-- keyboard-navigation.html    <- Experience 02 (keyboard nav + CTA widget)
 |-- css/
-|   |-- fonts.css           <- @font-face declarations (self-hosted)
-|   |-- tokens.css          <- all design tokens (CSS custom properties)
-|   |-- frame.css           <- layout, header, typography
-|   |-- components.css      <- shared components: buttons, panels, badges, etc.
-|   |-- preview.css         <- brand-faithful UC San Diego content scope
-|   |-- code.css            <- code blocks
-|   `-- access-lab.css      <- tool-specific styles only (no system overrides)
+|   |-- fonts.css               <- @font-face declarations (self-hosted)
+|   |-- tokens.css              <- all design tokens (CSS custom properties)
+|   |-- frame.css               <- layout, header, typography
+|   |-- components.css          <- shared components: buttons, panels, badges, etc.
+|   |-- preview.css             <- brand-faithful UC San Diego content scope
+|   |-- code.css                <- code blocks
+|   `-- access-lab.css          <- tool-specific styles only (no system overrides)
 |-- js/
-|   |-- access-lab.js       <- all interaction logic
-|   |-- theme.js            <- light/dark toggle (shared system script)
-|   |-- lucide.min.js       <- icon library (shared system script)
-|   `-- code-copy.js        <- code block copy button (shared system script)
-|-- fonts/                  <- self-hosted woff2 files
-|-- images/                 <- Geisel Library photos
-|-- _references/            <- local reference materials (gitignored)
+|   |-- seeing-hearing.js       <- Experience 01 logic (S1 + S2)
+|   |-- keyboard-nav.js         <- Experience 02 logic (S3 with CTA widget)
+|   |-- theme.js                <- light/dark toggle (shared system script)
+|   |-- lucide.min.js           <- icon library (shared system script)
+|   `-- code-copy.js            <- code block copy button (shared system script)
+|-- fonts/                      <- self-hosted woff2 files
+|-- images/                     <- Geisel Library photos
+|-- _references/                <- local reference materials (gitignored)
+|   `-- access-lab-v2.js        <- archived single-page JS (reference only)
 |-- starter/
-|   `-- template.html       <- blank page template for new tools
-|-- access-lab.jsx          <- original React prototype (reference only, not used)
-|-- CLAUDE.md               <- design system reference for Claude Code sessions
-`-- README.md               <- this file
+|   `-- template.html           <- blank page template for new tools
+|-- access-lab.jsx              <- original React prototype (reference only, not used)
+|-- CLAUDE.md                   <- design system reference for Claude Code sessions
+`-- README.md                   <- this file
 ```
 
 All CSS files except `access-lab.css` are shared with the `dx-tools` design system repo and should not be edited here. Changes to shared files belong in `dx-tools`, then synced here.
