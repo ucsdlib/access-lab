@@ -106,10 +106,16 @@
    Each step has a numbered badge, an instructional prompt, optional
    action buttons (.al-step__actions), and an optional outcome area.
    ──────────────────────────────────────────────────────────────── */
-.al-steps {
+/* Specificity note: frame.css has .dx-main ol { padding-left: var(--space-6);
+   margin-bottom: var(--space-4) } at (0,1,1). Using .dx-main .al-steps here
+   gives (0,2,0) so our resets win without !important. */
+.dx-main .al-steps {
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
+  list-style: none;  /* remove <ol> default markers */
+  padding: 0;        /* remove <ol> default left indent */
+  margin: 0;
 }
 
 .al-step {
@@ -143,7 +149,7 @@
 }
 
 .al-step__prompt {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);  /* 18px — these are primary instructions, not fine print */
   color: var(--color-text);
   line-height: 1.5;
   font-weight: var(--weight-medium);
@@ -395,20 +401,17 @@
   margin-top: var(--space-10);
 }
 
-.al-insight-panel .panel__body {
-  font-size: var(--text-sm);
-  line-height: 1.85;
-  color: var(--color-text-muted);
-}
-
 .al-key-ideas-panel {
   margin-top: var(--space-4);
 }
 
+/* "What this reveals" and "Key ideas" are primary takeaways, not supplementary
+   context. Use full-strength --color-text (not muted) and inherit --text-base
+   font size from the system panel__body rule — no downscaling. */
+.al-insight-panel .panel__body,
 .al-key-ideas-panel .panel__body {
-  font-size: var(--text-sm);
+  color: var(--color-text);
   line-height: 1.85;
-  color: var(--color-text-muted);
 }
 
 .al-key-ideas-panel .panel__body ul {
@@ -783,7 +786,7 @@ div.al-service-item.is-selected {
   align-items: center;
   justify-content: center;
   padding: 0 var(--space-4);
-  min-height: var(--target-sm);
+  min-height: var(--target-md);  /* 44px — WCAG 2.5.5 AAA */
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
   background: var(--color-surface);
@@ -915,6 +918,48 @@ div.al-hours-btn.is-selected {
     padding: 0 var(--space-2);
     font-size: var(--text-xs);
   }
+}
+
+/* ── Touch targets — WCAG 2.5.5 AAA (44 × 44 px minimum) ───────────
+   The DX system's btn--sm is 36px — below the AAA threshold.
+   The header brand link and nav links rely on the header flex-row for
+   their effective height, which collapses at narrow viewports.
+   These project-wide overrides bring every interactive element up to
+   44px without requiring HTML class changes across all pages.
+   ──────────────────────────────────────────────────────────────── */
+
+/* Brand wordmark: guarantee a 44px click target and centre its mark
+   + wordmark content within that height. display:flex is safe to
+   repeat — frame.css likely already sets it, this just makes it
+   explicit and adds the min-height guard. */
+.dx-header__brand {
+  min-height: var(--target-md);
+  display: flex;
+  align-items: center;
+}
+
+/* Nav links: explicit min-height so height doesn't depend solely on
+   the flex-row container, which can shrink below 44px at mobile
+   when the nav wraps to its own row (see @media 600px block above). */
+.dx-header__nav-link {
+  min-height: var(--target-md);
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Station tabs already have min-height: var(--target-lg) = 52px from
+   components.css, but some accessibility checkers test at mobile
+   viewports where layout changes. Reinforce with an explicit 44px
+   floor in this project context. */
+.station__tab {
+  min-height: var(--target-md);
+}
+
+/* All btn--sm elements in this project: promote to 44px minimum.
+   The btn--sm visual style (smaller padding, font size) is preserved —
+   only the minimum height changes to meet AAA requirements. */
+.dx-main .btn--sm {
+  min-height: var(--target-md);
 }
 
 /* ── Reduced motion ──────────────────────────────────────────────── */
