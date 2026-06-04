@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "access-lab",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4400"],
+      "runtimeExecutable": "/opt/homebrew/opt/ruby/bin/bundle",
+      "runtimeArgs": ["exec", "jekyll", "serve", "--port", "4400", "--livereload"],
       "port": 4400
     }
   ]

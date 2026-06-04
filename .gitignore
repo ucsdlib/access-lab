@@ -1,6 +1,15 @@
 # AI session data
 .claude/
 
+# Jekyll build output
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Ruby dependency lock (commit Gemfile.lock if deploying to GitHub Pages;
+# leave here for local-only dev to avoid platform lock-in)
+# Gemfile.lock
+
 # Local reference materials — not part of the project
 _references/
 

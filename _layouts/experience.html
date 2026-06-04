@@ -1,0 +1,13 @@
+---
+layout: default
+---
+
+{{ content }}
+
+<!-- ── Experience footer navigation ────────────────────── -->
+<nav class="al-exp-footer-nav" aria-label="Experience navigation">
+  <a href="{{ '/' | relative_url }}" class="btn btn--ghost btn--sm">&#8592; All experiences</a>
+  {% if page.next_experience %}
+  <a href="{{ page.next_experience | relative_url }}" class="btn btn--primary btn--sm">Next experience &#8594;</a>
+  {% endif %}
+</nav>

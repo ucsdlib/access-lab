@@ -1,0 +1,9 @@
+<nav class="dx-header__nav" aria-label="Site sections">
+  {% assign current_url = page.url | remove: "index.html" %}
+  {% for item in site.data.nav %}
+    {% assign item_url = item.url | remove: "index.html" %}
+    <a href="{{ item.url | relative_url }}"
+       class="dx-header__nav-link"
+       {% if current_url == item_url %}aria-current="page"{% endif %}>{{ item.title }}</a>
+  {% endfor %}
+</nav>

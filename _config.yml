@@ -1,0 +1,37 @@
+title: Access Lab
+description: >-
+  An experiential introduction to digital accessibility, built by the
+  UC San Diego Library Digital Experience Team.
+author: UC San Diego Library — Digital Experience Team
+
+# Set baseurl if deploying to a subdirectory, e.g. /access-lab
+# Leave empty for root deployment
+baseurl: ""
+url: ""
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Exclude files Jekyll shouldn't copy to _site/
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - _references/
+  - CLAUDE.md
+  - README.md
+  - "*.sh"
+  - ".claude/"
+  - ".gitignore"
+  - ".gitattributes"
+  - node_modules/
+
+# Keep these directories as-is (no Jekyll processing)
+keep_files:
+  - fonts
+  - images
+
+# Preserve .html extensions on page URLs so inter-page links like
+# href="seeing-hearing.html" continue to work without change.
+# Jekyll's default for pages already does this; we make it explicit.
+permalink: /:basename:output_ext
